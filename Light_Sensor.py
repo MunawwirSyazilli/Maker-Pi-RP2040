@@ -9,5 +9,5 @@ while True:
     digital_value = digital_sensor_pin.value()
     print("Digital value: ", digital_value)
 
-    # wait for 1 second
+    # wait for 0.5 second
     time.sleep(0.5)
