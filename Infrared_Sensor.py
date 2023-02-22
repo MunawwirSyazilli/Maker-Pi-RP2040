@@ -9,5 +9,5 @@ while True:
     ir_value = ir_sensor_pin.value()
     print("IR value: ", ir_value)
 
-    # wait for 30 second
+    # wait for 0.5 second
     time.sleep(0.5)
