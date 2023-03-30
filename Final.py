@@ -52,13 +52,13 @@ while True:
         motor_left_pin2.off()
         motor_right_pin1.off()
         motor_right_pin2.off()
-        utime.sleep(1)
+        utime.sleep(0.5)
         
         motor_left_pin1.on()
         motor_left_pin2.off()
         motor_right_pin1.off()
         motor_right_pin2.off()
-        utime.sleep(1)
+        utime.sleep(0.5)
         
     else:
         motor_left_pin1.on()
