@@ -1,33 +1,26 @@
-import time
 from machine import Pin
-trigger = Pin(2, Pin.OUT)
-echo = Pin(3, Pin.IN)
+import utime
 
-def measure_distance():
-    # Set the trigger pin to HIGH for 10 microseconds
-    trigger.high()
-    time.sleep_us(10)
+trigger = Pin(3, Pin.OUT)
+echo = Pin(2, Pin.IN)
+
+distance = 0
+def ultrasound():
+    global distance
     trigger.low()
-    
-    # Wait for the echo pin to go HIGH
+    utime.sleep_us(2)
+    trigger.high()
+    utime.sleep_us(5)
+    trigger.low()
     while echo.value() == 0:
-        pass
-    
-    # Measure the duration of the echo pin being HIGH
-    start_time = time.ticks_us()
+        signaloff = utime.ticks_us()
     while echo.value() == 1:
-        pass
-    end_time = time.ticks_us()
-    
-    # Calculate the distance in centimeters
-    duration = end_time - start_time
-    distance = duration / 58
-    
-    return distance
+        signalon = utime.ticks_us()
+    timepassed = signalon - signaloff
+    distance = (timepassed * 0.0343) / 2
 
 while True:
-    distance = measure_distance()
-    print("Distance: {} cm".format(distance))
-    time.sleep(0.1)
-
+    ultrasound()
+    print("Distance = ", distance, "cm")
+    utime.sleep(0.5)
 
