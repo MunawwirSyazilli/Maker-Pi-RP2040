@@ -1,22 +1,25 @@
-import machine
+from machine import Pin
 import utime
 
-# Define pins for motor control
-MOTOR_LEFT_PIN1 = 8
-MOTOR_LEFT_PIN2 = 9
-MOTOR_RIGHT_PIN1 = 10
-MOTOR_RIGHT_PIN2 = 11
+trigger = Pin(3, Pin.OUT)
+echo = Pin(2, Pin.IN)
 
-# Initialize motor control pins as output pins
-motor_left_pin1 = machine.Pin(MOTOR_LEFT_PIN1, machine.Pin.OUT)
-motor_left_pin2 = machine.Pin(MOTOR_LEFT_PIN2, machine.Pin.OUT)
-motor_right_pin1 = machine.Pin(MOTOR_RIGHT_PIN1, machine.Pin.OUT)
-motor_right_pin2 = machine.Pin(MOTOR_RIGHT_PIN2, machine.Pin.OUT)
+distance = 0
+def ultrasound():
+    global distance
+    trigger.low()
+    utime.sleep_us(2)
+    trigger.high()
+    utime.sleep_us(5)
+    trigger.low()
+    while echo.value() == 0:
+        signaloff = utime.ticks_us()
+    while echo.value() == 1:
+        signalon = utime.ticks_us()
+    timepassed = signalon - signaloff
+    distance = (timepassed * 0.0343) / 2
 
-# Move forward continuously
 while True:
-    motor_left_pin1.on()
-    motor_left_pin2.off()
-    motor_right_pin1.on()
-    motor_right_pin2.off()
-    utime.sleep(1)
+    ultrasound()
+    print("Distance = ", distance, "cm")
+    utime.sleep(0.5)
